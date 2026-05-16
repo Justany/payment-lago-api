@@ -87,6 +87,9 @@ module V1
       when :moneyhash
         configuration[:provider_customer_id] = model.moneyhash_customer&.provider_customer_id
         configuration.merge!(model.moneyhash_customer&.settings&.symbolize_keys || {})
+      when :pawapay
+        configuration[:provider_customer_id] = model.pawapay_customer&.provider_customer_id
+        configuration.merge!(model.pawapay_customer&.settings&.symbolize_keys || {})
       end
 
       configuration

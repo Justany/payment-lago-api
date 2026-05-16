@@ -20,6 +20,8 @@ module PaymentProviders
         PaymentProviders::Stripe::Customers::CreateService
       when "moneyhash"
         PaymentProviders::Moneyhash::Customers::CreateService
+      when "pawapay"
+        PaymentProviders::Pawapay::Customers::CreateService
       end
     end
   end
