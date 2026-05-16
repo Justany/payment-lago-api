@@ -101,6 +101,31 @@ FactoryBot.define do
       flow_id { SecureRandom.uuid[0..19] }
     end
   end
+
+  factory :pawapay_provider, class: "PaymentProviders::PawapayProvider" do
+    organization
+    type { "PaymentProviders::PawapayProvider" }
+    name { "pawaPay" }
+    code { "pawapay_#{SecureRandom.uuid}" }
+
+    secrets do
+      {api_key:}.to_json
+    end
+
+    settings do
+      {sandbox:, default_country:, default_correspondent:, webhook_secret:, success_redirect_url:}
+    end
+
+    transient do
+      api_key { SecureRandom.uuid }
+      sandbox { true }
+      default_country { "ZMB" }
+      default_correspondent { "MTN_MOMO_ZMB" }
+      webhook_secret { nil }
+      success_redirect_url { Faker::Internet.url }
+    end
+  end
+
   factory :flutterwave_provider, class: "PaymentProviders::FlutterwaveProvider" do
     organization
     type { "PaymentProviders::FlutterwaveProvider" }

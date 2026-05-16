@@ -36,6 +36,19 @@ FactoryBot.define do
 
     provider_customer_id { SecureRandom.uuid }
   end
+
+  factory :pawapay_customer, class: "PaymentProviderCustomers::PawapayCustomer" do
+    customer
+    organization { customer.organization }
+    payment_provider { association(:pawapay_provider, organization: organization) }
+
+    provider_customer_id { SecureRandom.uuid }
+
+    settings do
+      {phone_number: "260763456789", country: "ZMB", correspondent: "MTN_MOMO_ZMB"}
+    end
+  end
+
   factory :flutterwave_customer, class: "PaymentProviderCustomers::FlutterwaveCustomer" do
     customer
     organization { customer.organization }
