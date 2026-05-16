@@ -22,6 +22,8 @@ module PaymentRequests
             PaymentRequests::Payments::GocardlessService
           when "moneyhash"
             PaymentRequests::Payments::MoneyhashService
+          when "pawapay"
+            PaymentRequests::Payments::PawapayService
           else
             raise(NotImplementedError)
           end

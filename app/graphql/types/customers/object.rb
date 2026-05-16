@@ -146,6 +146,8 @@ module Types
           object.adyen_customer
         when :moneyhash
           object.moneyhash_customer
+        when :pawapay
+          object.pawapay_customer
         end
       end
 

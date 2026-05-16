@@ -4,7 +4,8 @@ module InboundWebhooks
   class ValidatePayloadService < BaseService
     WEBHOOK_SOURCES = {
       stripe: PaymentProviders::Stripe::ValidateIncomingWebhookService,
-      moneyhash: PaymentProviders::Moneyhash::ValidateIncomingWebhookService
+      moneyhash: PaymentProviders::Moneyhash::ValidateIncomingWebhookService,
+      pawapay: PaymentProviders::Pawapay::ValidateIncomingWebhookService
     }
 
     def initialize(organization_id:, code:, payload:, webhook_source:, signature:)

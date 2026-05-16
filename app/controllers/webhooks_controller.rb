@@ -108,4 +108,32 @@ class WebhooksController < ApplicationController
 
     head(:ok)
   end
+
+  def pawapay
+    body = request.body.read
+    parsed = body.present? ? JSON.parse(body) : {}
+
+    result = InboundWebhooks::CreateService.call(
+      organization_id: params[:organization_id],
+      webhook_source: :pawapay,
+      code: params[:code].presence,
+      payload: parsed,
+      signature: request.headers["Content-Digest"],
+      event_type: pawapay_event_type(parsed)
+    )
+
+    return head(:bad_request) unless result.success?
+
+    head(:ok)
+  end
+
+  private
+
+  def pawapay_event_type(payload)
+    return "deposit" if payload.is_a?(Hash) && payload["depositId"] && !payload["refundId"]
+    return "refund" if payload.is_a?(Hash) && payload["refundId"]
+    return "payout" if payload.is_a?(Hash) && payload["payoutId"]
+
+    nil
+  end
 end
